@@ -4,7 +4,6 @@ import { clearMatrix } from "../utils/Types";
 
 let rerenderCount = 0;
 
-//TODO: fix big rerender count
 function Canvas(prop: { drawColor: string }) {
   console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
   const [matrix, setMatrix] = useState<string[][]>(clearMatrix);
@@ -45,12 +44,14 @@ function Canvas(prop: { drawColor: string }) {
     let xRelativePos = Math.ceil(xRealPos / relativePixelHeight.current);
     let yRelativePos = Math.ceil(yRealPos / relativePixelWidth.current);
 
-    //update state
-    setMatrix((prevState) => {
-      const matrix = [...prevState];
-      matrix[yRelativePos - 1][xRelativePos - 1] = drawColor;
-      return matrix;
-    });
+    if (matrix[yRelativePos - 1][xRelativePos - 1] !== drawColor) {
+      //update state
+      setMatrix((prevState) => {
+        const matrix = [...prevState];
+        matrix[yRelativePos - 1][xRelativePos - 1] = drawColor;
+        return matrix;
+      });
+    }
   }
 
   //draw canvas with matrix change
