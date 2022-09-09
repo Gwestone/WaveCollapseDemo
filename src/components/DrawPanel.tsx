@@ -2,7 +2,15 @@ import "react";
 import Canvas from "./Canvas";
 import { useState } from "react";
 
-function DrawPanel() {
+let rerenderCount = 0;
+
+function DrawPanel(prop: { onDraw: (matrix: string[][]) => void }) {
+  console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
+  //send data to parent
+  function onDraw(matrix: string[][]) {
+    prop.onDraw(matrix);
+  }
+
   type coloursEnum =
     | "white"
     | "red"
@@ -15,10 +23,8 @@ function DrawPanel() {
   const [color, setColor] = useState<coloursEnum>("red");
   return (
     <>
-      <Canvas drawColor={color} />
+      <Canvas drawColor={color} onDraw={onDraw} />
       <div className="controls">
-        <button>gen random</button>
-        <button>gen select</button>
         <br />
         <button>clear</button>
         <div className="colors">

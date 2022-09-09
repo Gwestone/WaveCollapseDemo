@@ -2,10 +2,13 @@ import "react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { clearMatrix } from "../utils/Types";
 
-let rerenderCount = 0;
+//let rerenderCount = 0;
 
-function Canvas(prop: { drawColor: string }) {
-  console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
+function Canvas(prop: {
+  drawColor: string;
+  onDraw: (matrix: string[][]) => void;
+}) {
+  //console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
   const [matrix, setMatrix] = useState<string[][]>(clearMatrix);
 
   //init variables
@@ -57,7 +60,7 @@ function Canvas(prop: { drawColor: string }) {
   //draw canvas with matrix change
   //-----------------------------
   useEffect(() => {
-    console.log("rerender");
+    //console.log("rerender");
     matrix.forEach((row, y) => {
       row.forEach((cell, x) => {
         //draw pixel at location
@@ -70,16 +73,19 @@ function Canvas(prop: { drawColor: string }) {
         );
       });
     });
+    prop.onDraw(matrix);
   }, [matrix]);
 
   return (
-    <canvas
-      onMouseMove={(e) => onMouseMove(e, prop.drawColor)}
-      ref={canvasRef}
-      id="canvas"
-      width="500"
-      height="500"
-    ></canvas>
+    <>
+      <canvas
+        onMouseMove={(e) => onMouseMove(e, prop.drawColor)}
+        ref={canvasRef}
+        id="canvas"
+        width="500"
+        height="500"
+      ></canvas>
+    </>
   );
 }
 
