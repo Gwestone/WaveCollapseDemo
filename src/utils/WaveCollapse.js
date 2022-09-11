@@ -13,11 +13,11 @@ function Gen(sampleCanvasImgData) {
     true,
     3
   );
-  model.iterate(30, Math.random);
+  model.iterate(20000, Math.random);
   // console.log(model.graphics(outputCanvasImgData.data));
   // console.log(outputCanvasImgData.data);
 
-  return model.graphics();
+  return new ImageData(new Uint8ClampedArray(model.graphics()), 500, 500);
 
   //model.iterate(10, Math.random);
   //

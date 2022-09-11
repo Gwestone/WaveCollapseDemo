@@ -1,7 +1,8 @@
 import "react";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { canvasContext } from "../context";
 import { Gen } from "../utils/WaveCollapse";
+const worker = new Worker("worker/gen.worker.js", { type: "module" });
 
 function Generator() {
   const matrix = useContext(canvasContext);
@@ -12,9 +13,12 @@ function Generator() {
   let outputRef = useRef<HTMLCanvasElement>(null);
   const outputRefContextRef = useRef<CanvasRenderingContext2D | null>(null);
 
+  const [loadingState, setLoadingState] = useState(false);
+
   useEffect(() => {
     sampleContextRef.current = sampleRef.current!.getContext("2d");
     outputRefContextRef.current = outputRef.current!.getContext("2d");
+    worker.onmessage = onWorker;
   }, []);
 
   function onGenButton() {
@@ -25,14 +29,20 @@ function Generator() {
         sampleContextRef.current!.fillRect(x, y, 1, 1);
       });
     });
+    worker.postMessage(sampleContextRef.current?.getImageData(0, 0, 10, 10)!);
+    setLoadingState(true);
+    //let data = Gen(sampleContextRef.current?.getImageData(0, 0, 10, 10)!);
+    //outputRefContextRef.current?.putImageData(data, 0, 0);
+  }
 
-    let data = Gen(sampleContextRef.current?.getImageData(0, 0, 10, 10)!);
-    let imageData = new ImageData(new Uint8ClampedArray(data), 500, 500);
-    outputRefContextRef.current?.putImageData(imageData, 0, 0);
+  function onWorker(message: MessageEvent<ImageData>) {
+    outputRefContextRef.current?.putImageData(message.data, 0, 0);
+    setLoadingState(false);
   }
 
   return (
     <>
+      {loadingState ? <div>Loading now</div> : ""}
       <canvas
         ref={sampleRef}
         className={"sample"}
