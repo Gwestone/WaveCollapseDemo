@@ -1,4 +1,4 @@
-import { Gen } from "../../src/utils/WaveCollapse.js";
+import { Gen } from "./WaveCollapse.js";
 
 onmessage = (message) => {
   console.log("starting worker");

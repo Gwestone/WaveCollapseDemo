@@ -1,7 +1,6 @@
 import { OverlappingModel } from "wavefunctioncollapse";
 
 function Gen(sampleCanvasImgData) {
-  console.log(sampleCanvasImgData);
   let model = new OverlappingModel(
     sampleCanvasImgData.data,
     sampleCanvasImgData.width,
@@ -13,7 +12,7 @@ function Gen(sampleCanvasImgData) {
     true,
     3
   );
-  model.iterate(20000, Math.random);
+  model.iterate(1, Math.random);
   // console.log(model.graphics(outputCanvasImgData.data));
   // console.log(outputCanvasImgData.data);
 

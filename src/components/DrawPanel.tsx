@@ -2,10 +2,7 @@ import "react";
 import Canvas from "./Canvas";
 import { useState } from "react";
 
-let rerenderCount = 0;
-
 function DrawPanel(prop: { onDraw: (matrix: string[][]) => void }) {
-  console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
   //send data to parent
   function onDraw(matrix: string[][]) {
     prop.onDraw(matrix);
@@ -26,7 +23,6 @@ function DrawPanel(prop: { onDraw: (matrix: string[][]) => void }) {
       <Canvas drawColor={color} onDraw={onDraw} />
       <div className="controls">
         <br />
-        <button>clear</button>
         <div className="colors">
           <button
             className={color === "red" ? "active" : ""}

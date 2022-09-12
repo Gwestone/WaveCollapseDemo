@@ -16,10 +16,10 @@ function App() {
 
   return (
     <div className={"container"}>
-      <div className="section1">
+      <div className="section">
         <DrawPanel onDraw={onDraw} />
       </div>
-      <div className="section2">
+      <div className="section">
         <canvasContext.Provider value={matrix}>
           <Generator />
         </canvasContext.Provider>

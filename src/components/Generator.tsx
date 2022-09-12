@@ -1,28 +1,37 @@
 import "react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { canvasContext } from "../context";
-import { Gen } from "../utils/WaveCollapse";
-const worker = new Worker("worker/gen.worker.js", { type: "module" });
+const worker = new Worker(
+  "/public/worker/gen.worker.js?type=module&worker_file",
+  { type: "module" }
+);
 
 function Generator() {
+  //get data from drawing component
   const matrix = useContext(canvasContext);
 
+  //small sample canvas ref
   let sampleRef = useRef<HTMLCanvasElement>(null);
   const sampleContextRef = useRef<CanvasRenderingContext2D | null>(null);
 
+  //main output canvas ref
   let outputRef = useRef<HTMLCanvasElement>(null);
   const outputRefContextRef = useRef<CanvasRenderingContext2D | null>(null);
 
+  //block buttons when computing output
   const [loadingState, setLoadingState] = useState(false);
 
+  //init component
+  //-----------------------------
   useEffect(() => {
     sampleContextRef.current = sampleRef.current!.getContext("2d");
     outputRefContextRef.current = outputRef.current!.getContext("2d");
     worker.onmessage = onWorker;
   }, []);
 
+  //compute result
+  //-----------------------------
   function onGenButton() {
-    let genMatrix: string[][] = new Array(500);
     matrix!.forEach((row, y) => {
       row.forEach((cell, x) => {
         sampleContextRef.current!.fillStyle = cell;
@@ -31,10 +40,10 @@ function Generator() {
     });
     worker.postMessage(sampleContextRef.current?.getImageData(0, 0, 10, 10)!);
     setLoadingState(true);
-    //let data = Gen(sampleContextRef.current?.getImageData(0, 0, 10, 10)!);
-    //outputRefContextRef.current?.putImageData(data, 0, 0);
   }
 
+  //get and print result
+  //-----------------------------
   function onWorker(message: MessageEvent<ImageData>) {
     outputRefContextRef.current?.putImageData(message.data, 0, 0);
     setLoadingState(false);
@@ -42,7 +51,13 @@ function Generator() {
 
   return (
     <>
-      {loadingState ? <div>Loading now</div> : ""}
+      {loadingState ? (
+        <div className={"loading"}>
+          Loading now<div>this can take a while</div>
+        </div>
+      ) : (
+        ""
+      )}
       <canvas
         ref={sampleRef}
         className={"sample"}
@@ -56,7 +71,9 @@ function Generator() {
         width={500}
       ></canvas>
       <div className="controls">
-        <button onClick={onGenButton}>generate</button>
+        <button disabled={loadingState} onClick={onGenButton}>
+          generate
+        </button>
       </div>
     </>
   );

@@ -2,15 +2,13 @@ import "react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { clearMatrix } from "../utils/Types";
 
-//let rerenderCount = 0;
-
 function Canvas(prop: {
   drawColor: string;
   onDraw: (matrix: string[][]) => void;
 }) {
-  //console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
-  const [matrix, setMatrix] = useState<string[][]>(clearMatrix);
-
+  const [matrix, setMatrix] = useState<string[][]>(
+    JSON.parse(JSON.stringify(clearMatrix))
+  );
   //init variables
   //-----------------------------
   let resX = 10;

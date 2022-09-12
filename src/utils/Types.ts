@@ -1,4 +1,4 @@
-let clearMatrix = [
+const clearMatrix = [
   [
     "white",
     "white",
