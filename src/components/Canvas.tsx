@@ -5,6 +5,7 @@ import { clearMatrix } from "../utils/Types";
 function Canvas(prop: {
   drawColor: string;
   onDraw: (matrix: string[][]) => void;
+  clear: boolean;
 }) {
   const [matrix, setMatrix] = useState<string[][]>(
     JSON.parse(JSON.stringify(clearMatrix))
@@ -18,6 +19,14 @@ function Canvas(prop: {
 
   let relativePixelHeight = useRef<number>(0);
   let relativePixelWidth = useRef<number>(0);
+
+  //on clear button click
+  //-----------------------------
+  useEffect(() => {
+    setMatrix((prevState) => {
+      return JSON.parse(JSON.stringify(clearMatrix));
+    });
+  }, [prop.clear]);
 
   //setup component
   //-----------------------------

@@ -9,6 +9,8 @@ let rerenderCount = 0;
 
 function App() {
   console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
+
+  //get canvas data from draw panel and send in to GeneratorComponent component
   const [matrix, setMatrix] = useState<string[][] | null>(null);
   function onDraw(matrix: string[][]) {
     setMatrix(matrix);

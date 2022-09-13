@@ -12,7 +12,7 @@ function Gen(sampleCanvasImgData) {
     true,
     3
   );
-  model.iterate(1, Math.random);
+  model.iterate(20000, Math.random);
   // console.log(model.graphics(outputCanvasImgData.data));
   // console.log(outputCanvasImgData.data);
 

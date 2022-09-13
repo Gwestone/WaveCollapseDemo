@@ -1,7 +1,8 @@
 .container{
     font-family: 'Noto Sans', sans-serif;
-    height: 100%;
-    width: 100%;
+    height: fit-content;
+    width: fit-content;
+    margin: auto auto;
 }
 
 .section{
@@ -15,10 +16,31 @@
     border-radius: 25px;
 }
 
+.loading{
+    text-align: center;
+    margin-left: 200px;
+    margin-top: 200px;
+    font-size: 20px;
+    position: absolute;
+    background: #f1f1f1;
+    padding: 20px;
+    border-radius: 9999px;
+    /*box-shadow: 0px 0px 0px 150px rgba(0,0,0,0.150);*/
+}
+
+.loading > div{
+    font-size: 15px;
+}
+
 @media screen and (max-width: 1500px) {
     .section{
         display: flex;
         margin: 10px auto;
+    }
+
+    .loading{
+        margin-left: 200px;
+        margin-top: 200px;
     }
 }
 
@@ -77,20 +99,4 @@ button.active{
     background: white;
     margin-left: 20px;
     margin-top: 20px;
-}
-
-.loading{
-    text-align: center;
-    margin-left: 22%;
-    margin-top: 15%;
-    font-size: 20px;
-    position: absolute;
-    background: #f1f1f1;
-    padding: 20px;
-    border-radius: 9999px;
-    /*box-shadow: 0px 0px 0px 150px rgba(0,0,0,0.150);*/
-}
-
-.loading > div{
-    font-size: 15px;
 }

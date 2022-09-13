@@ -3,9 +3,16 @@ import Canvas from "./Canvas";
 import { useState } from "react";
 
 function DrawPanel(prop: { onDraw: (matrix: string[][]) => void }) {
+  const [color, setColor] = useState<coloursEnum>("red");
+  const [clear, setClear] = useState(false);
+
   //send data to parent
   function onDraw(matrix: string[][]) {
     prop.onDraw(matrix);
+  }
+
+  function onClear() {
+    setClear(!clear);
   }
 
   type coloursEnum =
@@ -17,11 +24,12 @@ function DrawPanel(prop: { onDraw: (matrix: string[][]) => void }) {
     | "lime"
     | "gray"
     | "darkorange";
-  const [color, setColor] = useState<coloursEnum>("red");
+
   return (
     <>
-      <Canvas drawColor={color} onDraw={onDraw} />
+      <Canvas drawColor={color} onDraw={onDraw} clear={clear} />
       <div className="controls">
+        <button onClick={onClear}>Clear</button>
         <br />
         <div className="colors">
           <button
