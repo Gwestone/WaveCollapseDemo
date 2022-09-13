@@ -1,0 +1,47 @@
+.generator{
+    width: 500px;
+    height: 500px;
+    background: #FFFFFF;
+    margin: 20px;
+}
+
+.sample{
+    width: 10px;
+    height: 10px;
+    background: white;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.controls > button{
+    background: white;
+    border: none;
+    padding: 13px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.loading{
+    text-align: center;
+    margin-left: 200px;
+    margin-top: 200px;
+    font-size: 20px;
+    position: absolute;
+    background: #f1f1f1;
+    padding: 20px;
+    border-radius: 9999px;
+    /*box-shadow: 0px 0px 0px 150px rgba(0,0,0,0.150);*/
+}
+
+.loading > div{
+    font-size: 15px;
+}
+
+@media screen and (max-width: 1500px) {
+    .loading{
+        margin-left: 200px;
+        margin-top: 200px;
+    }
+}

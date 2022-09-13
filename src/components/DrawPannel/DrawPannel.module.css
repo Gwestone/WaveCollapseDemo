@@ -1,0 +1,33 @@
+.controls > button{
+    background: white;
+    border: none;
+    padding: 13px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.colors{
+    margin-top: 10px;
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.colors > button{
+    border: none;
+    border-radius: 3px;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+}
+
+button:hover{
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.75);
+}
+
+button.active{
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.75);
+}

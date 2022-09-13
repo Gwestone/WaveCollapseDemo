@@ -1,15 +1,11 @@
 import "react";
-import "./App.css";
-import DrawPanel from "./components/DrawPanel";
-import Generator from "./components/Generator";
+import styles from "./App.module.css";
+import DrawPanel from "./components/DrawPannel/DrawPanel";
+import Generator from "./components/Generator/Generator";
 import { useState } from "react";
 import { canvasContext } from "./context";
 
-let rerenderCount = 0;
-
 function App() {
-  console.warn(`🔴 canvas rerender cound: [${++rerenderCount}]`);
-
   //get canvas data from draw panel and send in to GeneratorComponent component
   const [matrix, setMatrix] = useState<string[][] | null>(null);
   function onDraw(matrix: string[][]) {
@@ -17,11 +13,11 @@ function App() {
   }
 
   return (
-    <div className={"container"}>
-      <div className="section">
+    <div className={styles.container}>
+      <div className={styles.section}>
         <DrawPanel onDraw={onDraw} />
       </div>
-      <div className="section">
+      <div className={styles.section}>
         <canvasContext.Provider value={matrix}>
           <Generator />
         </canvasContext.Provider>

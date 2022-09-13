@@ -1,6 +1,7 @@
 import "react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { clearMatrix } from "../utils/Types";
+import { clearMatrix } from "../../utils/StaticTypes";
+import style from "./Canvas.module.css";
 
 function Canvas(prop: {
   drawColor: string;
@@ -23,15 +24,14 @@ function Canvas(prop: {
   //on clear button click
   //-----------------------------
   useEffect(() => {
-    setMatrix((prevState) => {
+    setMatrix((_) => {
       return JSON.parse(JSON.stringify(clearMatrix));
     });
   }, [prop.clear]);
 
-  //setup component
+  //setup component(componentDidMount)
   //-----------------------------
   useEffect(() => {
-    console.log("main");
     contextRef.current = canvasRef.current!.getContext("2d");
     relativePixelHeight.current =
       canvasRef.current!.getBoundingClientRect().height / resY;
@@ -54,10 +54,11 @@ function Canvas(prop: {
     let xRelativePos = Math.ceil(xRealPos / relativePixelHeight.current);
     let yRelativePos = Math.ceil(yRealPos / relativePixelWidth.current);
 
+    //check if color really changes
     if (matrix[yRelativePos - 1][xRelativePos - 1] !== drawColor) {
       //update state
       setMatrix((prevState) => {
-        const matrix = [...prevState];
+        const matrix = JSON.parse(JSON.stringify(prevState));
         matrix[yRelativePos - 1][xRelativePos - 1] = drawColor;
         return matrix;
       });
@@ -88,7 +89,7 @@ function Canvas(prop: {
       <canvas
         onMouseMove={(e) => onMouseMove(e, prop.drawColor)}
         ref={canvasRef}
-        id="canvas"
+        className={style.canvas}
         width="500"
         height="500"
       ></canvas>

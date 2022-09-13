@@ -1,0 +1,7 @@
+.canvas{
+    height: 500px;
+    background: #FFF;
+    margin: 20px;
+    width: 500px;
+    display: inline-flex;
+}

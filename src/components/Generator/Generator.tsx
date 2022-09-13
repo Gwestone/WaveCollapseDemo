@@ -1,10 +1,12 @@
 import "react";
 import { useContext, useEffect, useRef, useState } from "react";
-import { canvasContext } from "../context";
+import { canvasContext } from "../../context";
 const worker = new Worker(
   "/public/worker/gen.worker.js?type=module&worker_file",
   { type: "module" }
 );
+
+import styles from "./Generator.module.css";
 
 function Generator() {
   //get data from drawing component
@@ -21,7 +23,7 @@ function Generator() {
   //block buttons when computing output
   const [loadingState, setLoadingState] = useState(false);
 
-  //init component
+  //init component(componentDidMount)
   //-----------------------------
   useEffect(() => {
     sampleContextRef.current = sampleRef.current!.getContext("2d");
@@ -52,7 +54,7 @@ function Generator() {
   return (
     <>
       {loadingState ? (
-        <div className={"loading"}>
+        <div className={styles.loading}>
           Loading now<div>this can take a while</div>
         </div>
       ) : (
@@ -60,17 +62,17 @@ function Generator() {
       )}
       <canvas
         ref={sampleRef}
-        className={"sample"}
+        className={styles.sample}
         width={10}
         height={10}
       ></canvas>
       <canvas
         ref={outputRef}
-        className={"generator"}
+        className={styles.generator}
         height={500}
         width={500}
       ></canvas>
-      <div className="controls">
+      <div className={styles.controls}>
         <button disabled={loadingState} onClick={onGenButton}>
           generate
         </button>
