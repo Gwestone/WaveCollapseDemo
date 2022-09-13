@@ -12,5 +12,5 @@ This is simple react project showing wave collapse algorithm for generation cust
 `pnpm run dev`
 - Visit `localhost:5173`
 ### Screenshots
-![First image]()
-![Second image]()
+![First image](https://raw.githubusercontent.com/Gwestone/WaveCollapseDemo/master/resources/firstImg.png)
+![Second image](https://raw.githubusercontent.com/Gwestone/WaveCollapseDemo/master/resources/secondImg.png)
