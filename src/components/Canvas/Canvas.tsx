@@ -1,7 +1,8 @@
 import "react";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState, TouchEvent } from "react";
 import { clearMatrix } from "../../utils/StaticTypes";
 import style from "./Canvas.module.css";
+import { disableScroll, enableScroll } from "../../utils/Scroll";
 
 function Canvas(prop: {
   drawColor: string;
@@ -32,6 +33,12 @@ function Canvas(prop: {
   //setup component(componentDidMount)
   //-----------------------------
   useEffect(() => {
+    canvasRef.current!.addEventListener("touchstart", (_) => {
+      disableScroll(window);
+    });
+    canvasRef.current!.addEventListener("touchend", (_) => {
+      enableScroll(window);
+    });
     contextRef.current = canvasRef.current!.getContext("2d");
     relativePixelHeight.current =
       canvasRef.current!.getBoundingClientRect().height / resY;
@@ -50,6 +57,30 @@ function Canvas(prop: {
     let rect = canvasRef.current!.getBoundingClientRect();
     let xRealPos = e.clientX - rect.left;
     let yRealPos = e.clientY - rect.top;
+
+    let xRelativePos = Math.ceil(xRealPos / relativePixelHeight.current);
+    let yRelativePos = Math.ceil(yRealPos / relativePixelWidth.current);
+
+    //check if color really changes
+    if (matrix[yRelativePos - 1][xRelativePos - 1] !== drawColor) {
+      //update state
+      setMatrix((prevState) => {
+        const matrix = JSON.parse(JSON.stringify(prevState));
+        matrix[yRelativePos - 1][xRelativePos - 1] = drawColor;
+        return matrix;
+      });
+    }
+  }
+
+  //on mouse click even listener
+  //-----------------------------
+  function onTouchMove(e: TouchEvent<HTMLCanvasElement>, drawColor: string) {
+    let touche = e.touches[0];
+
+    //calc the pos of relative pixel
+    let rect = canvasRef.current!.getBoundingClientRect();
+    let xRealPos = touche.clientX - rect.left;
+    let yRealPos = touche.clientY - rect.top;
 
     let xRelativePos = Math.ceil(xRealPos / relativePixelHeight.current);
     let yRelativePos = Math.ceil(yRealPos / relativePixelWidth.current);
@@ -88,6 +119,7 @@ function Canvas(prop: {
     <>
       <canvas
         onMouseMove={(e) => onMouseMove(e, prop.drawColor)}
+        onTouchMove={(e) => onTouchMove(e, prop.drawColor)}
         ref={canvasRef}
         className={style.canvas}
         width="500"

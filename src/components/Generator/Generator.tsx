@@ -1,10 +1,9 @@
 import "react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { canvasContext } from "../../context";
-const worker = new Worker(
-  "/public/worker/gen.worker.js?type=module&worker_file",
-  { type: "module" }
-);
+const worker = new Worker("/worker/gen.worker.js?type=module&worker_file", {
+  type: "module",
+});
 
 import styles from "./Generator.module.css";
 
