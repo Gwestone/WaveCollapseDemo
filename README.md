@@ -1,6 +1,6 @@
 ## Wave collapse demo
 This is simple react project showing wave collapse algorithm for generation custom textures with interactive samples
-### Visit online hosted demo [HERE](https://example.com/)
+### Visit online hosted demo [HERE](https://gwestone.github.io/WaveCollapseDemo/)
 ### Build instructions 
 - Clone the repository <br> 
 `git clone https://github.com/Gwestone/WaveCollapseDemo.git`
